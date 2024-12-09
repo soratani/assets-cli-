@@ -1,8 +1,8 @@
-import Config, { ApplicationInfo } from "@/common/config";
+import Config, { ApplicationInfo } from "@app/common/config";
 import Server, { ProxyConfigArrayItem } from "webpack-dev-server";
 import createConfig from "./config";
 import { webpack } from "webpack";
-import { usePort } from "@/utils";
+import { usePort } from "@app/utils";
 import { WebpackLogger } from "./logger";
 
 function getInfrastructureLogger(name: string) {

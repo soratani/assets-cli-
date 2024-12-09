@@ -5,3 +5,4 @@ export * from "./build.commond";
 export * from "./publish.command";
 export * from "./login.commond";
 export * from "./start.command";
+export * from './test.command';

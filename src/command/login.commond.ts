@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import { get } from "lodash";
-import { AbstractCommand, Input } from "@/command";
+import { AbstractCommand, Input } from "@app/command";
 
 export class LoginCommand extends AbstractCommand {
   public load(program: Command): void {

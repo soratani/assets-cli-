@@ -1,8 +1,8 @@
-import { Input } from "@/command";
-import { AbstractAction } from "@/action";
-import { Logger } from "@/utils";
-import { Package } from "@/common/file";
-import Config from "@/common/config";
+import { Input } from "@app/command";
+import { AbstractAction } from "@app/action";
+import { Logger } from "@app/utils";
+import { Package } from "@app/common/file";
+import Config from "@app/common/config";
 
 export class BuildAction extends AbstractAction {
   public async handle(

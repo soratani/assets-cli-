@@ -1,25 +1,37 @@
 import colors from 'chalk';
 
-export const ERROR_PREFIX = colors.bgRgb(210, 0, 75).bold.rgb(0, 0, 0)(
-  " ERROR "
-);
-export const INFO_PREFIX = colors.bgRgb(35, 187, 40).bold.rgb(0, 0, 0)(
-  " INFO "
-);
-export const WRAN_PREFIX = colors.bgRgb(208, 211, 45).bold.rgb(0, 0, 0)(
-  " WRAN "
-);
+export const ERROR_PREFIX = (...text: string[]) => {
+  return `${TIME(` ${time()} `)}${colors.bgRgb(210, 0, 75).bold.rgb(0, 0, 0)(" ERROR ", ...text)}`
+};
+export const INFO_PREFIX = (...text: string[]) => {
+  return `${TIME(` ${time()} `)}${colors.bgRgb(35, 187, 40).bold.rgb(0, 0, 0)(" INFO ", ...text)}`
+};
+export const WRAN_PREFIX = (...text: string[]) => {
+  return `${TIME(` ${time()} `)}${colors.bgRgb(208, 211, 45).bold.rgb(0, 0, 0)(" WRAN ", ...text)}`
+};
+export const TIME = colors.bgBlack.bold.rgb(255, 255, 255);
+
+function time() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1; // 月份从 0 开始，所以要加 1
+  const day = now.getDate();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 
 export class Logger {
   static error(message: string, ...args: any[]) {
-    console.log(`${ERROR_PREFIX} ${colors.redBright(message)}`, ...args);
+    console.log(`${ERROR_PREFIX()} ${colors.redBright(message)}`, ...args);
     process.exit(1);
   }
   static info(message: string, ...args: any[]) {
-    console.log(`${INFO_PREFIX} ${colors.green(message)}`, ...args);
+    console.log(`${INFO_PREFIX()} ${colors.green(message)}`, ...args);
   }
   static wran(message: string, ...args: any[]) {
-    console.log(`${WRAN_PREFIX} ${colors.yellow(message)}`, ...args);
+    console.log(`${WRAN_PREFIX()} ${colors.yellow(message)}`, ...args);
   }
   static baseText(message: string) {
     return colors.blue(message);

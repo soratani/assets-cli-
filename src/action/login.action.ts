@@ -1,7 +1,7 @@
 import { get } from "lodash";
-import { Input } from "@/command";
-import { Logger, api, setCredential } from "@/utils";
-import { AbstractAction } from "@/action";
+import { Input } from "@app/command";
+import { Logger, api, setCredential } from "@app/utils";
+import { AbstractAction } from "@app/action";
 
 export class LoginAction extends AbstractAction {
   public async handle(

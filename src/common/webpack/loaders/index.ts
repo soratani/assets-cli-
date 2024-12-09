@@ -1,4 +1,4 @@
-import { ApplicationInfo } from "@/common/config";
+import { ApplicationInfo } from "@app/common/config";
 import { RuleSetRule } from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import {

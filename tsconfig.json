@@ -14,7 +14,7 @@
     "rootDir": "./src",
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@app/*": ["./src/*"]
     }
   }
 }

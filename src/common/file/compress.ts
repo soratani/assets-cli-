@@ -1,7 +1,7 @@
 import { createWriteStream, existsSync, mkdirSync } from "fs";
 import archiver from "archiver";
 import { join } from "path";
-import { Logger } from "@/utils/logger";
+import { Logger } from "@app/utils/logger";
 import { ApplicationInfo, packageTypeMap } from "../config";
 
 export function zip(options: ApplicationInfo) {

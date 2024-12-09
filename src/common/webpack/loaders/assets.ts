@@ -1,4 +1,4 @@
-import { APPTYPE, ApplicationInfo } from "@/common/config";
+import { APPTYPE, ApplicationInfo } from "@app/common/config";
 
 export function createAssetLoader(pkg: ApplicationInfo, maxSize = 8 * 1024) {
   let filename = "static/image/[name].[contenthash:8][ext]";

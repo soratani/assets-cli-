@@ -1,6 +1,6 @@
 import { get } from "lodash";
 import { join } from "path";
-import { ApplicationInfo, IPackageJson } from "@/common/config";
+import { ApplicationInfo, IPackageJson } from "@app/common/config";
 
 function createCommon(common: IPackageJson[]) {
   return common.reduce((pre, item) => {

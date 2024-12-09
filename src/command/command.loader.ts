@@ -1,17 +1,19 @@
 import { Command } from "commander";
-import { Logger } from "@/utils";
+import { Logger } from "@app/utils";
 import {
   BuildCommand,
   PublishCommand,
   LoginCommand,
   StartCommand,
-} from "@/command";
+  TestCommand,
+} from "@app/command";
 import {
   BuildAction,
   PublishAction,
   LoginAction,
   StartAction,
-} from "@/action";
+  TestAction,
+} from "@app/action";
 
 export class CommandLoader {
   public static load(program: Command): void {
@@ -19,6 +21,7 @@ export class CommandLoader {
     new LoginCommand(new LoginAction()).load(program);
     new BuildCommand(new BuildAction()).load(program);
     new StartCommand(new StartAction()).load(program);
+    new TestCommand(new TestAction()).load(program);
     this.handleInvalidCommand(program);
   }
 

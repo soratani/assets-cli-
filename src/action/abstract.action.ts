@@ -1,4 +1,4 @@
-import { Input } from "@/command";
+import { Input } from "@app/command";
 
 export abstract class AbstractAction {
   public abstract handle(

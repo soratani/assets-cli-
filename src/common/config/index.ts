@@ -1,4 +1,4 @@
-import { Logger } from "@/utils";
+import { Logger } from "@app/utils";
 import * as yaml from "yaml";
 import { existsSync, readFileSync, statSync } from "fs";
 import { extname, join } from "path";
@@ -83,8 +83,8 @@ export default class Config {
   private data!: IConfig;
 
   private checkFile(file: string): IConfig {
-    const stat = statSync(file);
     if (!existsSync(file)) Logger.error("配置文件不存在");
+    const stat = statSync(file);
     if (!stat.isFile()) Logger.error("路径不是文件");
     if (!this.isYaml(file)) Logger.error("配置文件不是一下格式:yaml、yml");
     const data = readFileSync(file).toString();

@@ -5,7 +5,7 @@ import {
   api,
   createPackageHash,
   createTask,
-} from "@/utils";
+} from "@app/utils";
 import FormData from "form-data";
 import { createReadStream } from "fs";
 import { zip } from "./compress";
@@ -135,7 +135,7 @@ export class Package {
     Logger.info(`名称:${name}`);
     Logger.info(`类型:${type}`);
     Logger.info(`版本:${version}`);
-    const task = createTask("dots", INFO_PREFIX, `打包中...`);
+    const task = createTask("dots", INFO_PREFIX("INFO"), `打包中...`);
     try {
       task.start();
       await run(this.option, this.config);
@@ -153,7 +153,7 @@ export class Package {
     Logger.info(`名称:${name}`);
     Logger.info(`类型:${type}`);
     Logger.info(`版本:${version}`);
-    const task = createTask("dots", INFO_PREFIX, `启动中...`);
+    const task = createTask("dots", INFO_PREFIX("INFO"), `启动中...`);
     try {
       task.start();
       const server = await start(this.option, this.config, this.proxy);

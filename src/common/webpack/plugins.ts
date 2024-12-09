@@ -1,4 +1,4 @@
-import Config, { ApplicationInfo, APPTYPE, ENV } from "@/common/config";
+import Config, { ApplicationInfo, APPTYPE, ENV } from "@app/common/config";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import HtmlWebpackTagsPlugin from "html-webpack-tags-plugin";
@@ -8,7 +8,7 @@ import webpack, { DefinePlugin } from "webpack";
 import EslintWebpackPlugin from "eslint-webpack-plugin";
 import dotenv from 'dotenv';
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import { findFiles } from "@/utils";
+import { findFiles } from "@app/utils";
 import { readFileSync } from "fs";
 import { join } from "path";
 
