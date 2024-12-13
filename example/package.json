@@ -1,0 +1,6 @@
+{
+    "name": "root",
+    "scripts": {
+        "test": "ts-node -r tsconfig-paths/register ../src/cli.ts test admin"
+    }
+}

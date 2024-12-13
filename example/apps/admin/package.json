@@ -1,4 +1,6 @@
 {
     "name": "admin",
-    "version": "0.0.1"
+    "version": "0.0.1",
+    "main": "./src/index.ts",
+    "exports": "./src/exports.ts"
 }
