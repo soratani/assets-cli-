@@ -2,5 +2,11 @@
     "name": "root",
     "scripts": {
         "test": "ts-node -r tsconfig-paths/register ../src/cli.ts test admin"
+    },
+    "dependencies": {
+        "@soratani-code/web-http": "1.0.16",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-router-dom": "^7.0.2"
     }
 }
