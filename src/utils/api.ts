@@ -1,7 +1,6 @@
-import axios from "axios";
 import home from "home";
 import fs from "fs";
-import { get } from "lodash";
+import { HttpClient, Platform } from '@soratani-code/web-http';
 import os from "os";
 import md5 from "md5";
 const pkg = require("../../package.json");
@@ -10,7 +9,7 @@ export function fingerprint() {
   const machine = os.machine();
   const arch = os.arch();
   const release = os.release();
-  return md5(JSON.stringify({ machine, arch, release }));
+  return Promise.resolve(md5(JSON.stringify({ machine, arch, release })));
 }
 
 export function getCredential() {
@@ -36,33 +35,11 @@ export interface IRes {
   data?: any;
 }
 
-export const api = axios.create({
-  baseURL: process.env.HOST || "https://www.soratani.cn/api",
-  headers: {
-    version: pkg.version,
-    app: pkg.name,
-    fingerprint: fingerprint(),
-    platform: 4,
-    system: 2,
-    type: 3,
-  },
+export const api = new HttpClient({
+  platform: Platform.cli,
+  app: pkg.name,
+  fingerprint,
+  version: pkg.version,
+  prefix: '/api',
+  sign: '',
 });
-
-api.interceptors.request.use((config): any => {
-  if (config.headers["credential"]) return config;
-  return {
-    ...config,
-    headers: {
-      ...config.headers,
-      credential: getCredential(),
-    },
-  };
-});
-api.interceptors.response.use(
-  (value) => {
-    return get(value, "data", { code: 500, message: "服务异常" });
-  },
-  (error) => {
-    return get(error, "response.data", { code: 500, message: "服务异常" });
-  }
-);

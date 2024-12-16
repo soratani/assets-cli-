@@ -3,6 +3,7 @@ import { AbstractCommand } from "./abstract.command";
 import { ApplicationConfig } from "@app/lib/config";
 import { get } from "lodash";
 import { Logger } from "@app/utils";
+import { Builder } from "@app/lib/builder";
 
 export class TestCommand extends AbstractCommand {
     public load(program: Command): void {
@@ -16,9 +17,10 @@ export class TestCommand extends AbstractCommand {
                 const env = get(command, "env");
                 const config = new ApplicationConfig(file, { env });
                 const instance = config.find('app', app);
+                const builder = new Builder(app, config);
                 if (!instance) Logger.error(`暂未找到当前应用${app}`);
                 instance.load();
-                console.log(instance);
+                console.log(instance.exports, instance.alias);
                 // instance.load();
             })
 
