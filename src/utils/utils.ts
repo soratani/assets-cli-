@@ -1,10 +1,15 @@
 // 生成文件hash
 import { glob } from "glob";
+import home from "home";
+import fs from "fs";
+import os from "os";
 import crypto from "crypto";
 import path, { join } from "path";
 import prot from 'tcp-port-used';
+import dotenv from 'dotenv';
 import { existsSync, readFileSync, readdirSync, stat, statSync } from "fs";
 import ora from "ora";
+import { filter, reduce } from "lodash";
 
 type SpinnerName =
   | "dots"
@@ -150,4 +155,27 @@ export function usePort(port: number, host?: string): Promise<number> {
     if (!value) return port;
     return usePort(port + 1, host);
   }).catch(() => usePort(port + 1, host))
+}
+
+export function readConfig(): Record<string, any> {
+  const credentialPath = home.resolve("~/.samrc");
+  if (!fs.existsSync(credentialPath)) return undefined;
+  const code = fs.readFileSync(credentialPath, { encoding: "utf-8" });
+  return dotenv.parse(code);
+}
+
+export function writeConfig(key: string, value: any) {
+  const credentialPath = home.resolve("~/.samrc");
+  if (!fs.existsSync(credentialPath)) {
+    fs.mkdirSync(credentialPath);
+  };
+  const vars = filter(fs.readFileSync(credentialPath, "utf-8").split(os.EOL), (item) => item.includes('='));
+  const has = vars.find((item) => item.includes(key));
+  if (has) {
+    const index = vars.indexOf(has);
+    vars.splice(index, 1, `${key}=${JSON.stringify(value)}`);
+  } else {
+    vars.push(`${key}=${JSON.stringify(value)}`);
+  }
+  fs.writeFileSync(credentialPath, vars.join(os.EOL));
 }

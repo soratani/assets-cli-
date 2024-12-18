@@ -1,8 +1,10 @@
 import home from "home";
 import fs from "fs";
-import { HttpClient, Platform } from '@soratani-code/web-http';
+import { HttpClient, Platform, Storage } from '@soratani-code/web-http';
 import os from "os";
 import md5 from "md5";
+import dotenv from 'dotenv';
+import { readConfig, writeConfig } from "./utils";
 const pkg = require("../../package.json");
 
 export function fingerprint() {
@@ -12,34 +14,25 @@ export function fingerprint() {
   return Promise.resolve(md5(JSON.stringify({ machine, arch, release })));
 }
 
-export function getCredential() {
-  const credentialPath = home.resolve("~/.samrc");
-  if (!fs.existsSync(credentialPath)) return process.env.CREDENTIAL;
-  return (
-    process.env.CREDENTIAL ||
-    fs.readFileSync(credentialPath, { encoding: "utf-8" })
-  );
-}
-
-export function setCredential(value: string) {
-  const credentialPath = home.resolve("~/.samrc");
-  if (!fs.existsSync(credentialPath)) {
-    fs.mkdirSync(credentialPath);
+class HttpStorage extends Storage {
+  get(key: string, value?: any) {
+    const conf = readConfig();
+    if (!conf || !conf[key]) return value;
+    return conf[key];
   }
-  return fs.writeFileSync(credentialPath, value, { encoding: "utf-8" });
+  set(key: string, value: any) {
+    writeConfig(key, value);
+  }
 }
 
-export interface IRes {
-  code: number;
-  message: string;
-  data?: any;
-}
+export const storage = new HttpStorage();
 
 export const api = new HttpClient({
+  storage,
   platform: Platform.cli,
   app: pkg.name,
   fingerprint,
   version: pkg.version,
-  prefix: '/api',
+  prefix: 'http://localhost:3000/api',
   sign: '',
 });
