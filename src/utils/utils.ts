@@ -159,7 +159,9 @@ export function usePort(port: number, host?: string): Promise<number> {
 
 export function readConfig(): Record<string, any> {
   const credentialPath = home.resolve("~/.samrc");
-  if (!fs.existsSync(credentialPath)) return undefined;
+  if (!fs.existsSync(credentialPath)) {
+    fs.writeFileSync(credentialPath, '');
+  };
   const code = fs.readFileSync(credentialPath, { encoding: "utf-8" });
   return dotenv.parse(code);
 }
@@ -167,7 +169,7 @@ export function readConfig(): Record<string, any> {
 export function writeConfig(key: string, value: any) {
   const credentialPath = home.resolve("~/.samrc");
   if (!fs.existsSync(credentialPath)) {
-    fs.mkdirSync(credentialPath);
+    fs.writeFileSync(credentialPath, '');
   };
   const vars = filter(fs.readFileSync(credentialPath, "utf-8").split(os.EOL), (item) => item.includes('='));
   const has = vars.find((item) => item.includes(key));

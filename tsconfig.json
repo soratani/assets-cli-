@@ -13,8 +13,12 @@
     "outDir": "./lib",
     "rootDir": "./src",
     "skipLibCheck": true,
+    "lib": ["ES2017", "DOM"],
     "paths": {
       "@app/*": ["./src/*"]
     }
-  }
+  },
+  "exclude": [
+    "./example"
+  ]
 }

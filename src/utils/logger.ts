@@ -1,3 +1,4 @@
+import { HttpLogger } from '@soratani-code/web-http';
 import colors from 'chalk';
 
 export const ERROR_PREFIX = (...text: string[]) => {
@@ -22,7 +23,20 @@ function time() {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-export class Logger {
+export class Logger extends HttpLogger {
+  log(label: string, message: string): void {
+    console.log(`${INFO_PREFIX()}`, label, message);
+  }
+  info(label: string, ...message: any[]): void {
+    console.log(`${INFO_PREFIX()}`, label, ...message);
+  }
+  warn(label: string, ...message: any[]): void {
+    console.log(`${WRAN_PREFIX()}`, label, ...message);
+  }
+  error(label: string, ...message: any[]): void {
+    console.log('>>>>>')
+    console.log(`${ERROR_PREFIX()}`, label, ...message);
+  }
   static error(message: string, ...args: any[]) {
     console.log(`${ERROR_PREFIX()} ${colors.redBright(message)}`, ...args);
     process.exit(1);

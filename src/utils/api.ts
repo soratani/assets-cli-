@@ -1,10 +1,8 @@
-import home from "home";
-import fs from "fs";
 import { HttpClient, Platform, Storage } from '@soratani-code/web-http';
 import os from "os";
 import md5 from "md5";
-import dotenv from 'dotenv';
 import { readConfig, writeConfig } from "./utils";
+import { Logger } from "./logger";
 const pkg = require("../../package.json");
 
 export function fingerprint() {
@@ -29,10 +27,10 @@ export const storage = new HttpStorage();
 
 export const api = new HttpClient({
   storage,
+  logger: new Logger(),
   platform: Platform.cli,
   app: pkg.name,
   fingerprint,
   version: pkg.version,
-  prefix: 'http://localhost:3000/api',
-  sign: '',
+  prefix: 'http://127.0.0.1:3000/api',
 });

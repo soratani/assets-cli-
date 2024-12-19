@@ -1,6 +1,5 @@
 import {
   INFO_PREFIX,
-  IRes,
   Logger,
   api,
   createPackageHash,
@@ -15,6 +14,7 @@ import Config, { ApplicationInfo, APPTYPE } from "../config";
 import { ProxyConfigArrayItem } from "webpack-dev-server";
 import { get } from "lodash";
 import { App } from "./app";
+import { HttpData } from "@soratani-code/web-http";
 
 export class Package {
   static syncType(type: APPTYPE) {
@@ -39,19 +39,19 @@ export class Package {
   }
 
   static syncAll(packages: App[]) {
-    return packages.reduce((pre: Promise<IRes>, item) => {
+    return packages.reduce((pre: Promise<HttpData>, item) => {
       return pre.then(() => item.sync());
     }, Promise.resolve({ code: 500, message: "" }));
   }
 
   static buildAll(packages: App[]) {
-    return packages.reduce((pre: Promise<IRes>, item) => {
+    return packages.reduce((pre: Promise<HttpData>, item) => {
       return pre.then(() => item.build());
     }, Promise.resolve({ code: 500, message: "" }));
   }
 
   static startAll(packages: App[]) {
-    return packages.reduce((pre: Promise<IRes>, item) => {
+    return packages.reduce((pre: Promise<HttpData>, item) => {
       return pre.then(() => item.start());
     }, Promise.resolve({ code: 500, message: "" }));
   }
@@ -117,7 +117,7 @@ export class Package {
     );
     task.start();
     return api
-      .post<any, IRes>(URL, params, config)
+      .post<any, HttpData>(URL, params, config)
       .then((res) => {
         task.succeed(Logger.infoText("上传完成"));
         return res;
