@@ -5,7 +5,7 @@ import { api, Logger } from "@app/utils";
 
 export class Application {
     constructor(private readonly option: IAppConfig) {}
-    private code: string;
+    private code: string = '';
 
     get name() {
         return get(this.option, 'info.name')
@@ -15,6 +15,10 @@ export class Application {
         return get(this.option, 'info.version')
     }
 
+    /**
+     * 加载应用的基本信息
+     * 模块信息
+     */
     async load() {
         const { name, version } = pick(this.option.info, ['name', 'version'])
         Logger.info("加载应用")

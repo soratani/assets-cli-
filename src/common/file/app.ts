@@ -44,15 +44,15 @@ import { HttpData } from "@soratani-code/web-http";
     }
   
     static buildAll(packages: App[]) {
-      return packages.reduce((pre: Promise<HttpData>, item) => {
-        return pre.then(() => item.build());
-      }, Promise.resolve({ code: 500, message: "" }));
+      // return packages.reduce((pre: Promise<HttpData>, item) => {
+      //   return pre.then(() => item.build());
+      // }, Promise.resolve({ code: 500, message: "" }));
     }
   
     static startAll(packages: App[]) {
-      return packages.reduce((pre: Promise<HttpData>, item) => {
-        return pre.then(() => item.start());
-      }, Promise.resolve({ code: 500, message: "" }));
+      // return packages.reduce((pre: Promise<HttpData>, item) => {
+      //   return pre.then(() => item.start());
+      // }, Promise.resolve({ code: 500, message: "" } as HttpData));
     }
   
     constructor(
@@ -68,8 +68,8 @@ import { HttpData } from "@soratani-code/web-http";
       const data = get(this, 'option.proxy', []);
       const targets = Array.from(new Set(data.map((item) => item.target)));
       return targets.reduce((pre, item) => {
-        const context = data.filter((i) => i.target === item).map((i) => i.path);
-        return pre.concat([{ context, target: item, changeOrigin: true }]);
+        // const context = data.filter((i) => i.target === item).map((i) => i.path);
+        return pre.concat([{ context: [], target: item, changeOrigin: true }]);
       }, [] as ProxyConfigArrayItem[]);
     }
   

@@ -14,11 +14,13 @@
     "rootDir": "./src",
     "skipLibCheck": true,
     "lib": ["ES2017", "DOM"],
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "@app/*": ["./src/*"]
     }
   },
   "exclude": [
-    "./example"
+    "example"
   ]
 }

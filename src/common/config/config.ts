@@ -23,14 +23,24 @@ export class ApplicationConfig {
     constructor(private readonly file: string, private readonly options: IConfigOption) {
         this.data = this.parseConfigFile(join(process.cwd(), this.file));
         this.apps = this.generateApps(this.data.apps);
+        this.packages = this.generatePackages(this.data.packages);
     }
 
     private data!: IConfig;
     private apps: Application[];
+    private packages: Package[];
 
     private isYaml(file: string) {
         const name = extname(file);
         return [".yaml", ".yml"].includes(name);
+    }
+
+    private parsePackage(file: string) {
+        try {
+            return JSON.parse(readFileSync(file).toString());
+        } catch (error) {
+            return undefined;
+        }
     }
 
     private parseConfigFile(file: string): IConfig {
@@ -50,13 +60,7 @@ export class ApplicationConfig {
     }
 
     private generateApps(apps: string) {
-        function parsePackage(file: string) {
-            try {
-                return JSON.parse(readFileSync(file).toString());
-            } catch (error) {
-                return undefined;
-            }
-        }
+        const parse = this.parsePackage;
         const env = get(this.options, 'env', ENV.development);
         const credential = get(this.options, 'credential');
         const apps_path = join(process.cwd(), apps);
@@ -71,11 +75,36 @@ export class ApplicationConfig {
         });
         const filter_apps = filter(apps_config, (app) => existsSync(app.package));
         return map(filter_apps, (app) => {
-            const data = parsePackage(app.package);
+            const data = parse(app.package);
             if(!data) return undefined;
             app.info = data;
             return this.generateApp(app);
-        }).filter(Boolean);
+        }).filter(Boolean) as Application[];
+    }
+    private generatePackages(pkgs: string) {
+        const parse = this.parsePackage;
+        const env = get(this.options, 'env', ENV.development);
+        const credential = get(this.options, 'credential');
+        const pkgs_path = join(process.cwd(), pkgs);
+        const pkgs_config = map<string, IAppConfig>(readdirSync(pkgs_path), (dir) => {
+            return {
+                path: join(pkgs_path, dir),
+                package: join(pkgs_path, dir, 'package.json'),
+                info: {},
+                env,
+                credential
+            }
+        });
+        const filter_pkgs = filter(pkgs_config, (app) => existsSync(app.package));
+        return map(filter_pkgs, (app) => {
+            const data = parse(app.package);
+            if(!data) return undefined;
+            app.info = data;
+            return this.generatePackage(app);
+        }).filter(Boolean) as Package[];
+    }
+    private generatePackage(pkg: IAppConfig) {
+        return new Package(pkg);
     }
 
     private generateApp(app: IAppConfig) {
@@ -84,5 +113,6 @@ export class ApplicationConfig {
 
     find<T extends FindType>(type: T, name: string): FindResult<T> {
         if (type === 'app') return this.apps.find((item) => item.name === name) as FindResult<T>;
+        return this.packages.find((item) => item.name === name) as FindResult<T>;
     }
 }

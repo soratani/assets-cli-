@@ -9,7 +9,7 @@ import prot from 'tcp-port-used';
 import dotenv from 'dotenv';
 import { existsSync, readFileSync, readdirSync, stat, statSync } from "fs";
 import ora from "ora";
-import { filter, reduce } from "lodash";
+import { filter } from "lodash";
 
 type SpinnerName =
   | "dots"
@@ -100,7 +100,7 @@ type SpinnerName =
 
 function loopdir(dir: string): string[] {
   const dirs = readdirSync(dir);
-  return dirs.reduce((pre, item) => {
+  return dirs.reduce<string[]>((pre, item) => {
     const _path = join(dir, item);
     const state = statSync(_path);
     if (state.isDirectory()) return pre.concat(loopdir(_path));
