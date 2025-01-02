@@ -1,11 +1,8 @@
 {
     "name": "admin",
     "version": "0.0.1",
-    
-    "exports": {
-        ".": "./src/index.ts"
-    },
-    "entry": "./src/index.tsx",
+    "main": "./src/export.ts",
+    "app": "./src/index.tsx",
     "dependencies": {
         "help": "file:../help"
     }
