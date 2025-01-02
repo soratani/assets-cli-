@@ -1,8 +1,5 @@
 import { Input } from "@app/command";
 import { AbstractAction } from "@app/action";
-import { Logger } from "@app/utils";
-import { Package } from "@app/common/file";
-import Config from "@app/common/config";
 
 export class PublishAction extends AbstractAction {
   public async handle(
@@ -10,30 +7,6 @@ export class PublishAction extends AbstractAction {
     options?: Input[],
     extraFlags?: string[]
   ): Promise<void> {
-    const config = options.find((o) => o.name === "config")?.value as Config;
-    const app = options.find((o) => o.name === "app")?.value as string;
-    try {
-      Logger.info("准备打包");
-      if (app) {
-        const pkg = config.apps.find((item) => item.name == app);
-        if (!pkg) throw new Error("打包异常");
-        await pkg.build();
-        Logger.info("准备上传");
-        const task = await pkg.sync();
-        if (task.code !== 1) {
-          Logger.error(task.message);
-        }
-        return Logger.info("上传资源包完毕");
-      }
-      await Package.buildAll(config.apps);
-      Logger.info("准备上传");
-      const task = await Package.syncAll(config.apps);
-      if (task.code !== 1) {
-        Logger.error(task.message);
-      }
-      Logger.info("上传资源包完毕");
-    } catch (error) {
-      Logger.error(error.message);
-    }
+
   }
 }

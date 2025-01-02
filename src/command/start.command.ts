@@ -1,7 +1,6 @@
 import { Command } from "commander";
 import { get } from "lodash";
 import { AbstractCommand, Input } from "@app/command";
-import Config from "@app/common/config";
 
 export class StartCommand extends AbstractCommand {
   public load(program: Command): void {
@@ -15,20 +14,20 @@ export class StartCommand extends AbstractCommand {
       )
       .option("-c, --config [config]", "配置文件", "sam.yaml")
       .action(async (app: string, command: Command) => {
-        const inputs: Input[] = [];
-        const options: Input[] = [];
-        const config = get(command, "config");
-        const env = get(command, "env");
-        const instance = new Config(config, { env });
-        options.push({
-          name: "app",
-          value: app,
-        });
-        options.push({
-          name: "config",
-          value: instance,
-        });
-        await this.action.handle(inputs, options);
+        // const inputs: Input[] = [];
+        // const options: Input[] = [];
+        // const config = get(command, "config");
+        // const env = get(command, "env");
+        // const instance = new Config(config, { env });
+        // options.push({
+        //   name: "app",
+        //   value: app,
+        // });
+        // options.push({
+        //   name: "config",
+        //   value: instance,
+        // });
+        // await this.action.handle(inputs, options);
       });
   }
 }
