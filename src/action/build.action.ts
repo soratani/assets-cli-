@@ -1,7 +1,7 @@
 import { Input } from "@app/command";
 import { AbstractAction } from "@app/action";
 import { Builder } from "@app/lib/builder";
-import { ApplicationConfig, ENV } from "@app/lib/config";
+import { ApplicationConfig, AppType, ENV } from "@app/lib/config";
 // import { Package } from "@app/common/file";
 // import Config from "@app/common/config";
 
@@ -14,7 +14,8 @@ export class BuildAction extends AbstractAction {
     const env = options?.find((o) => o.name === "env")?.value as ENV;
     const app = options?.find((o) => o.name === "app")?.value as string;
     const file = options?.find((o) => o.name === "config")?.value as string;
-    const config = new ApplicationConfig(file, { env });
+    const type = options?.find((o) => o.name === 'type')?.value as AppType;
+    const config = new ApplicationConfig(file, { env, type });
     const builder = new Builder(config);
     builder.build(app);
     // try {

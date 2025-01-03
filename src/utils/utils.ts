@@ -144,8 +144,8 @@ export function createTask(
 
 export function findFiles(dir: string) {
   if (!dir) return [];
-  const stat = statSync(dir);
   if (!existsSync(dir)) return [];
+  const stat = statSync(dir);
   if (stat.isFile()) return [dir];
   return loopdir(dir).map((item) => item.replace(`${dir}${path.sep}`, ""));
 }
