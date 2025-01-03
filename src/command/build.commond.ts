@@ -18,7 +18,6 @@ export class BuildCommand extends AbstractCommand {
         const options: Input[] = [];
         const file = get(command, "config", '');
         const env = get(command, "env");
-        // const instance = new Config(config, { env });
         options.push({
           name: "app",
           value: app,
