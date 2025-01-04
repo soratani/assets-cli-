@@ -1,7 +1,7 @@
 import { Input } from "@app/command";
 import { AbstractAction } from "@app/action";
-import { Builder } from "@app/lib/builder";
-import { ApplicationConfig, AppType, ENV } from "@app/lib/config";
+import { Builder } from "@app/common/builder";
+import { ApplicationConfig, AppType, ENV } from "@app/common/config";
 // import { Package } from "@app/common/file";
 // import Config from "@app/common/config";
 

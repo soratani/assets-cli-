@@ -1,8 +1,8 @@
 import { Command } from "commander";
-import { ApplicationConfig } from "@app/lib/config";
+import { ApplicationConfig } from "@app/common/config";
 import { get } from "lodash";
 import { Logger } from "@app/utils";
-import { Builder } from "@app/lib/builder";
+import { Builder } from "@app/common/builder";
 import { AbstractCommand } from "./abstract.command";
 
 export class TestCommand extends AbstractCommand {
