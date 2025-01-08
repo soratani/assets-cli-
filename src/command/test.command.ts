@@ -17,10 +17,10 @@ export class TestCommand extends AbstractCommand {
                 const env = get(command, "env");
                 const config = new ApplicationConfig(file, { env });
                 const instance = config.find('app', app);
-                const builder = new Builder(config);
-                if (!instance) Logger.error(`暂未找到当前应用${app}`);
-                instance.load();
-                console.log(instance.exports, instance.alias);
+                // const builder = new Builder(config);
+                // if (!instance) Logger.error(`暂未找到当前应用${app}`);
+                // instance.load();
+                // console.log(instance.exports, instance.alias);
                 // instance.load();
             })
 

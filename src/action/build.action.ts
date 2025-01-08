@@ -16,8 +16,8 @@ export class BuildAction extends AbstractAction {
     const file = options?.find((o) => o.name === "config")?.value as string;
     const type = options?.find((o) => o.name === 'type')?.value as AppType;
     const config = new ApplicationConfig(file, { env, type });
-    const builder = new Builder(config);
-    builder.build(app);
+    const builder = Builder.create('app', app, config);
+    builder.build();
     // try {
     //   Logger.info("准备打包");
     //   if (app) {

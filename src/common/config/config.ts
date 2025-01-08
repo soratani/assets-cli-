@@ -17,7 +17,9 @@ export const defaultConfig: IConfig = {
 
 export const frameworks: Record<Framework, string[]> = {
     [Framework.react]: ['react', 'react-dom', 'react-router-dom'],
-    [Framework.vue]: ['vue', 'vue-router']
+    [Framework.vue]: ['vue', 'vue-router'],
+    [Framework.angular]: ['angular'],
+    [Framework.common]: []
 }
 
 type FindResult<T extends FindType> = T extends "app" ? Application : Package;

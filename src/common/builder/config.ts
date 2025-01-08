@@ -1,9 +1,9 @@
 import { Configuration } from "webpack";
+import { resolve } from "path";
 import { Application, ApplicationConfig, ENV } from "../config";
 import loader from "./loaders";
 import optimization from "./optimization";
 import plugins from "./plugins";
-// import { join } from "path";
 
 
 export default function config(app: Application, config: ApplicationConfig): Configuration {
@@ -21,6 +21,9 @@ export default function config(app: Application, config: ApplicationConfig): Con
         optimization: optimization(),
         resolve: {
             extensions: [".js", ".jsx", ".ts", ".tsx", ".json", '.vue'],
+            alias: {
+                '@babel/runtime': resolve(__dirname, '../../../node_modules/@babel/runtime'),
+            }
         },
         performance: {
             hints: false,

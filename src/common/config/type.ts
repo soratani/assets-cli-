@@ -23,7 +23,9 @@ export enum ENV {
 
 export enum Framework {
     react = 'react',
-    vue = 'vue'
+    vue = 'vue',
+    angular = 'angular',
+    common = 'common',
 }
 
 export enum AppType {
